@@ -23,6 +23,7 @@ function App() {
         <Route path="/CreateNewUser" element={<CreateNewUser/>}/>
         <Route path="/Items" element={<Items/>}/>
         <Route path="/Users" element={<Users/>}/>
+        <Route path="/UserItems" element={<UserItems/>}/>
       </Routes> 
       
     </>

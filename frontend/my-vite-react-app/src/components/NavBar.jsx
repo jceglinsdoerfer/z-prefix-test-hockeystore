@@ -11,6 +11,7 @@ function NavBar() {
             <Link to="/CreateNewUser"><button className="nav-btn">CreateNewUser</button></Link>
             <Link to="/Items"><button className="nav-btn">Items</button></Link>
             <Link to="/Users"><button className="nav-btn">User</button></Link>
+            <Link to="/UserItems"><button className="nav-btn">UserItems</button></Link>
         </nav>
     </>
     );
