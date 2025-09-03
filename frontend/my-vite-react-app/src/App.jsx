@@ -1,3 +1,4 @@
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -9,7 +10,7 @@ import ItemsDetails from "./components/ItemsDetails";
 import Login from "./components/Login";
 import UserItems from "./components/UserItems";
 import Users from "./components/Users";
-import UsersDetails from "/components/UsersDetails";
+import UsersDetails from "./components/UsersDetails";
 
 function App() {
   return (

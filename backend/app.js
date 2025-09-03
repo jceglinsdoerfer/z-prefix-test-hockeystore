@@ -7,8 +7,8 @@ const knex = require('knex')(require('./knexfile.js')['development']);
 app.use(express.json());
 app.use(cors());
 
-app.get('/hockeystore', async function(req, res) {
-  await knex('items', 'users')
+app.get('/hockeystore/users', async function(req, res) {
+  await knex('users')
     .select('*')
     .then(data => res.status(200).json(data))
     .catch(err =>
@@ -19,7 +19,7 @@ app.get('/hockeystore', async function(req, res) {
     );
 });
 
-app.get('/hockeystore', async function(req, res) {
+app.get('/hockeystore/items', async function(req, res) {
   await knex('items')
     .select('*')
     .then(data => res.status(200).json(data))
