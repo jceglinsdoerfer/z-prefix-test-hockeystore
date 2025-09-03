@@ -4,11 +4,9 @@
  */
 exports.up = function(knex) {
   return knex.schema.createTable('items', table => {
-    table.increments('items_id');
-    table.integer('user_id');
+    table.increments('items_id').primary();
     table.string('item_name');
     table.string('description');
-    table.integer('quantity');
   })
 };
 

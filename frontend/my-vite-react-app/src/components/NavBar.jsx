@@ -6,7 +6,6 @@ function NavBar() {
   return (
     <>
         <nav className="topnav">
-            <Link to="/"><button className="nav-btn">Home</button></Link>
             <Link to="/Home"><button className="nav-btn">Home</button></Link>
             <Link to="/Login"><button className="nav-btn">Login</button></Link>
             <Link to="/CreateNewUser"><button className="nav-btn">CreateNewUser</button></Link>

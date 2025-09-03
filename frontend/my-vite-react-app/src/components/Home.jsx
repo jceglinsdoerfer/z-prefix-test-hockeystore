@@ -1,5 +1,6 @@
 import { useState } from "react";
 import NavBar from "./NavBar";
+import Items from "./Items"
 // import Sidebar from "./SideBar";
 // import PlaylistCard from "./PlaylistCard";
 // import ArtistCard from "./ArtistCard";
@@ -15,10 +16,10 @@ function Home() {
       <div>
         <main>
           <div id="component-container">
-            <Items />
+            <Items/>
           </div>
         </main>
-        <footer class="footer">
+        <footer className="footer">
           
         </footer>
       </div>
