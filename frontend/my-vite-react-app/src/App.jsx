@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import UserItems from "./components/UserItems";
 import Users from "./components/Users";
 import UsersDetails from "./components/UsersDetails";
+import Home from "./components/Home";
 
 function App() {
   return (
