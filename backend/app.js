@@ -34,7 +34,7 @@ app.get('/hockeystore/items', async function(req, res) {
 app.get('/hockeystore/useritems/:userId', async function(req, res) {
   await knex('user_items')
     .select('*')
-    .whereRaw(`user_id = ${req.params.userId}`)
+    .where('user_id', req.params.userId)
     .then(data => res.status(200).json(data))
     .catch(err =>
       res.status(404).json({
