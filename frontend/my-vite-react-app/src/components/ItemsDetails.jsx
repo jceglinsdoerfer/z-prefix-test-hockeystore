@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { APIContext } from "./Context";
+
 //this will be a detail of one specific item showing it's details
 
 function ItemDetails(id) {
