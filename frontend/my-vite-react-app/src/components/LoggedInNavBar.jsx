@@ -24,8 +24,7 @@ function LoggedInNavBar() {
                 <Link to="/Home"><button className="nav-btn">Home</button></Link>                
                 <Link to="/UserItems"><button className="nav-btn">UserItems</button></Link>
                 <Link to="/CreateNewItem"><button className="nav-btn">CreateNewItem</button></Link>
-                <Link to="/UpdateItem"><button className="nav-btn">UpdateItem</button></Link>
-                <Link to="/Logout"><button className="nav-btn">Log Out</button></Link>
+                <Link to="/UpdateItem"><button className="nav-btn">UpdateItem</button></Link>                
                 <button className="nav-btn" onClick={handleLogout}>Logout</button>
             </nav>
         </>

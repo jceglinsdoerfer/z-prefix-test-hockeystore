@@ -14,14 +14,14 @@ app.use(cors({
   credentials: true
 }));
 app.post('/hockeystore/login', async (req, res) => {
-  const {user_name, password} = req.body;
+  const { user_name, password } = req.body;
 
   try {
     const user = await knex('users')
-    .where({ user_name, password })
-    .first();
+      .where({ user_name, password })
+      .first();
 
-    if(!user) {
+    if (!user) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
     const token = jwt.sign(
@@ -39,7 +39,7 @@ app.post('/hockeystore/login', async (req, res) => {
       httpOnly: true,
       secure: false,
       sameSite: 'lax',
-      maxAge: 24 * 60 *60 * 1000
+      maxAge: 24 * 60 * 60 * 1000
     });
 
     res.status(200).json({
@@ -50,7 +50,7 @@ app.post('/hockeystore/login', async (req, res) => {
         last_name: user.last_name
       }
     });
-  } catch (err) { 
+  } catch (err) {
     console.error('Login error:', err);
     res.status(500).json({ error: 'Login failed' });
   }
@@ -61,7 +61,7 @@ app.post('/hockeystore/logout', (req, res) => {
   res.status(200).json({ message: 'Logout successful' });
 });
 
-app.get('/hockeystore/users', async function(req, res) {
+app.get('/hockeystore/users', async function (req, res) {
   await knex('users')
     .select('*')
     .then(data => res.status(200).json(data))
@@ -73,7 +73,7 @@ app.get('/hockeystore/users', async function(req, res) {
     );
 });
 
-app.get('/hockeystore/items', async function(req, res) {
+app.get('/hockeystore/items', async function (req, res) {
   await knex('items')
     .select('*')
     .then(data => res.status(200).json(data))
@@ -85,7 +85,7 @@ app.get('/hockeystore/items', async function(req, res) {
     );
 });
 
-app.get('/hockeystore/useritems/:userId', async function(req, res) {
+app.get('/hockeystore/useritems/:userId', async function (req, res) {
   await knex('user_items')
     .select('*')
     .where('user_id', req.params.userId)
@@ -111,11 +111,11 @@ app.post('/hockeystore/users', async (req, res) => {
         first_name,
         last_name,
         user_name,
-        password 
+        password
       })
       .returning(['user_id', 'first_name', 'last_name', 'user_name']); // return inserted user
 
-      console.log('Insert success:', newUser)
+    console.log('Insert success:', newUser)
 
     res.status(201).json({
       message: 'User Created',
@@ -139,11 +139,11 @@ app.post('/hockeystore/items', async (req, res) => {
       .insert({
         item_name,
         description
-        
-      })
-      .returning(['items_id', 'item_name', 'description']); 
 
-      console.log('Insert success:', newItem)
+      })
+      .returning(['items_id', 'item_name', 'description']);
+
+    console.log('Insert success:', newItem)
 
     res.status(201).json({
       message: 'Item Created',
@@ -169,13 +169,13 @@ app.put('/hockeystore/items/:id', async (req, res) => {
       .update({
         item_name,
         description
-        
+
       })
-      .returning(['items_id', 'item_name', 'description']); 
+      .returning(['items_id', 'item_name', 'description']);
 
-      console.log('Update success:', updatedItems[0]);
+    console.log('Update success:', updatedItems[0]);
 
-      res.status(200).json({
+    res.status(200).json({
       message: 'Item Updated',
       items: updatedItems[0]
     });
@@ -184,6 +184,60 @@ app.put('/hockeystore/items/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to update item' });
   }
 });
+
+app.delete(`/hockeystore/items`, async (req, res) => {
+
+  const { item_name, description } = req.body;
+
+  try {
+    console.log('Attempting to delete item from DB');
+
+    const [newItem] = await knex('items')
+      .delete({
+        item_name,
+        description
+
+      })
+      .returning(['items_id', 'item_name', 'description']);
+
+    console.log('Deletion successful:', newItem)
+
+    res.status(201).json({
+      message: 'Item Deleted',      
+    });
+  } catch (err) {
+    console.error('Error inserting item:', err);
+    res.status(500).json({ error: 'Failed to add item' });
+  }
+});
+
+
+// app.deleteUserItem(`/hockeystore/items/UserItems/${item_id}`, async (req, res) => {
+//   //console.log('Received item data:', req.body);
+
+//   const { item_name, description } = req.body;
+
+//   try {
+//     console.log('Attempting to delete item from DB');
+
+//     const [newItem] = await knex('items')
+//       .delete({
+//         item_name,
+//         description
+
+//       })
+//       .returning(['items_id', 'item_name', 'description']);
+
+//     console.log('Deletion successful:', newItem)
+
+//     res.status(201).json({
+//       message: 'Item Deleted',      
+//     });
+//   } catch (err) {
+//     console.error('Error inserting item:', err);
+//     res.status(500).json({ error: 'Failed to add item' });
+//   }
+// });
 
 
 app.listen(PORT, () => {

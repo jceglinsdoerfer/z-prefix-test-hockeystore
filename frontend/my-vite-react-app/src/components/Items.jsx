@@ -6,6 +6,10 @@ import NavBar from "./NavBar";
 export default function Items () {
     const [items, setItems] = useState([]);
     
+    addItem => {
+
+    }
+
     useEffect(() => {
         fetchItems();
     }, []);
@@ -33,8 +37,11 @@ export default function Items () {
                     <div key={item.items_id} className="item-card">
                         <h3>{item.item_name}</h3>
                         <p>{item.description}</p>
+                        <button className="nav-btn">Add to Your list</button>
+                        <button className="nav-btn">Delete this item</button>
                     </div>
                 ))}
+                
             </div>
         </div>
     )
