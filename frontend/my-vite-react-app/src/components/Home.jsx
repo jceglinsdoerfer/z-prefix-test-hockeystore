@@ -16,7 +16,7 @@ function Home() {
       <div>
         <main>
           <div id="component-container">
-            <Items/>
+            
           </div>
         </main>
         <footer className="footer">
@@ -26,5 +26,5 @@ function Home() {
     </>
   );
 }
-
+//removed from <Items/> line 19 after <div id="component-container"/> to remove items from the home page
 export default Home;

@@ -5,7 +5,6 @@ function Login() {
   return (
     <>
       <header className="header">
-        <h1>Hockeystore</h1>
         <NavBar />
       </header>
     </>

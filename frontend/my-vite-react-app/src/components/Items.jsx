@@ -1,5 +1,6 @@
 //this will be a normal list of all items that everyone can access but not manipulate(users can manipulate);
 import { useState, useEffect } from 'react';
+import NavBar from "./NavBar";
 
 
 export default function Items () {
@@ -23,6 +24,9 @@ export default function Items () {
 
     return (
         <div className="items-container">
+            <header className="header">
+                <NavBar />
+            </header>
            <h2>All Items</h2> 
             <div className="items-list">
                 {items.map((item) => (
