@@ -185,30 +185,27 @@ app.put('/hockeystore/items/:id', async (req, res) => {
   }
 });
 
-app.delete(`/hockeystore/items`, async (req, res) => {
+app.delete(`/hockeystore/items/:id`, async (req, res) => {
 
-  const { item_name, description } = req.body;
+  const { id } = req.params;
 
   try {
-    console.log('Attempting to delete item from DB');
+    const deleteItem = await knex('items').where('items_id' , id).first();
+    
+    if (!deleteItem) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+    
+    await knex('items').where('items_id', id).del();
 
-    const [newItem] = await knex('items')
-      .delete({
-        item_name,
-        description
-
-      })
-      .returning(['items_id', 'item_name', 'description']);
-
-    console.log('Deletion successful:', newItem)
-
-    res.status(201).json({
-      message: 'Item Deleted',      
-    });
+    res.status(200).json({
+      message: 'Item Deleted',
+      deletedItem: deleteItem
+});
   } catch (err) {
-    console.error('Error inserting item:', err);
-    res.status(500).json({ error: 'Failed to add item' });
-  }
+  console.error('Error deleting item:', err);
+  res.status(500).json({ error: 'Failed to delete item' });
+}
 });
 
 

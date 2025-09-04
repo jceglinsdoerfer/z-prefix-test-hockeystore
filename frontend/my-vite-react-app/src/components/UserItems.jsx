@@ -11,7 +11,7 @@ export default function UserItems () {
     }, []);
     const fetchItems = async () => {
       //need to add user_id to show only those items that have a user_id = to the one logged in...
-        const response = await fetch(`http://localhost:8000/hockeystore/items`);
+        const response = await fetch(`http://localhost:8000/hockeystore/userItems`);
         if (!response.ok) {
             throw new Error('Failed to fetch items');
         }
