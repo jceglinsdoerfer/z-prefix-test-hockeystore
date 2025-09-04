@@ -12,6 +12,7 @@ import UserItems from "./components/UserItems";
 import Users from "./components/Users";
 import UsersDetails from "./components/UsersDetails";
 import Home from "./components/Home";
+import CreateNewItem from "./components/CreateNewItem"
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/Items" element={<Items/>}/>
         <Route path="/Users" element={<Users/>}/>
         <Route path="/UserItems" element={<UserItems/>}/>
+        <Route path="/CreateNewItem" element={<CreateNewItem/>}/>
       </Routes> 
       
     </>

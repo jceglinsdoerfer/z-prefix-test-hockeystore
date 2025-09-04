@@ -27,6 +27,7 @@ function NavBar() {
                 <Link to="/Items"><button className="nav-btn">Items</button></Link>
                 <Link to="/Users"><button className="nav-btn">User</button></Link>
                 <Link to="/UserItems"><button className="nav-btn">UserItems</button></Link>
+                <Link to="/CreateNewItem"><button className="nav-btn">CreateNewItem</button></Link>
                 <button className="nav-btn" onClick={handleLogout}>Logout</button>
             </nav>
         </>

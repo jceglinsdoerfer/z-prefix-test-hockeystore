@@ -127,6 +127,33 @@ app.post('/hockeystore/users', async (req, res) => {
   }
 });
 
+app.post('/hockeystore/items', async (req, res) => {
+  console.log('Received item data:', req.body);
+
+  const { item_name, description } = req.body;
+
+  try {
+    console.log('Attempting to insert item into DB');
+
+    const [newItem] = await knex('items')
+      .insert({
+        item_name,
+        description
+        
+      })
+      .returning(['item_id', 'item_name', 'description']); 
+
+      console.log('Insert success:', newItem)
+
+    res.status(201).json({
+      message: 'Item Created',
+      items: newItem
+    });
+  } catch (err) {
+    console.error('Error inserting item:', err);
+    res.status(500).json({ error: 'Failed to create user' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`The server is running on ${PORT}`);
