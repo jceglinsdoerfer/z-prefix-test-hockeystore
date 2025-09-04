@@ -13,6 +13,10 @@ import Users from "./components/Users";
 import UsersDetails from "./components/UsersDetails";
 import Home from "./components/Home";
 import CreateNewItem from "./components/CreateNewItem"
+import UpdateItem from "./components/UpdateItem"
+import LoggedInNavBar from "./components/LoggedInNavBar"
+import LoggedIn from "./components/LoggedIn"
+
 
 function App() {
   return (
@@ -26,6 +30,9 @@ function App() {
         <Route path="/Users" element={<Users/>}/>
         <Route path="/UserItems" element={<UserItems/>}/>
         <Route path="/CreateNewItem" element={<CreateNewItem/>}/>
+        <Route path="/UpdateItem" element={<UpdateItem/>}/>
+        <Route path="/LoggedInNavBar" element={<LoggedInNavBar/>}/>
+        <Route path="/LoggedIn" element={<LoggedIn/>}/>
       </Routes> 
       
     </>

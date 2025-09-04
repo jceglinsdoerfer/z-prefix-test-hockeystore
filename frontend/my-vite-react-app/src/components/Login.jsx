@@ -1,12 +1,15 @@
 import { useState } from "react";
 import NavBar from "./NavBar";
-//need to make this a login page!!
+import { useNavigate } from 'react-router-dom';
+
 function Login() {
+
   const [formData, setFormData] = useState({
     user_name: "",
     password: ""
   });
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,10 +30,13 @@ function Login() {
         body: JSON.stringify(formData)
       });
       const data = await response.json();
+      console.log(data.user.first_name)
 
       if (response.ok) {
         setMessage(`Welcome ${data.user.first_name}! You are now logged in.`);
         setFormData({ user_name: "", password: "" });
+        console.log("checking if it got here.");
+        navigate('/LoggedIn')
       } else {
         setMessage(data.error || "Login Failed");
       }
@@ -44,33 +50,34 @@ function Login() {
 
 
 
-return (
-  <>
-    <header className="header">
-      <NavBar />
-    </header>
-    <div>
-      <h3>Please enter User Name and Password</h3>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="user_name"
-          value={formData.user_name}
-          placeholder="Enter User name"
-          onChange={handleChange}
-          required />
-        <input
-          name="password"
-          type="password"
-          value={formData.password}
-          placeholder="Enter password"
-          onChange={handleChange}
-          required />
-        <button type="submit">Log in</button>
-      </form>
-    </div>
-  </>
+  return (
+    <>
+      <header className="header">
+        <NavBar />
+      </header>
+      <div>
+        <h3>Please enter User Name and Password</h3>
+        <form onSubmit={handleSubmit}>
+          <input
+            name="user_name"
+            value={formData.user_name}
+            placeholder="Enter User name"
+            onChange={handleChange}
+            required />
+          <input
+            name="password"
+            type="password"
+            value={formData.password}
+            placeholder="Enter password"
+            onChange={handleChange}
+            required />
+          <button type="submit">Log in</button>
+        </form>
+        {message}
+      </div>
+    </>
 
-);
+  );
 }
 
 export default Login;

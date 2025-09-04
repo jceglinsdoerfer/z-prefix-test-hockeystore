@@ -9,7 +9,7 @@ export default function CreateNewUser() {
         user_name: "",
         password: ""
     });
-    //or do I leave the default of usestate empty object?
+    
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log("Form submitted", formData);

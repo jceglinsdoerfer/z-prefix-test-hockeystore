@@ -111,7 +111,7 @@ app.post('/hockeystore/users', async (req, res) => {
         first_name,
         last_name,
         user_name,
-        password // In real apps, hash this
+        password 
       })
       .returning(['user_id', 'first_name', 'last_name', 'user_name']); // return inserted user
 
@@ -141,7 +141,7 @@ app.post('/hockeystore/items', async (req, res) => {
         description
         
       })
-      .returning(['item_id', 'item_name', 'description']); 
+      .returning(['items_id', 'item_name', 'description']); 
 
       console.log('Insert success:', newItem)
 
@@ -151,9 +151,40 @@ app.post('/hockeystore/items', async (req, res) => {
     });
   } catch (err) {
     console.error('Error inserting item:', err);
-    res.status(500).json({ error: 'Failed to create user' });
+    res.status(500).json({ error: 'Failed to add item' });
   }
 });
+
+app.put('/hockeystore/items/:id', async (req, res) => {
+  console.log('Received update data:', req.body);
+
+  const { id } = req.params;
+  const { item_name, description } = req.body;
+
+  try {
+    console.log(`Attempting to update item with ID: ${id}`);
+
+    const updatedItems = await knex('items')
+      .where({ items_id: id })
+      .update({
+        item_name,
+        description
+        
+      })
+      .returning(['items_id', 'item_name', 'description']); 
+
+      console.log('Update success:', updatedItems[0]);
+
+      res.status(200).json({
+      message: 'Item Updated',
+      items: updatedItems[0]
+    });
+  } catch (err) {
+    console.error('Error updating item:', err);
+    res.status(500).json({ error: 'Failed to update item' });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`The server is running on ${PORT}`);

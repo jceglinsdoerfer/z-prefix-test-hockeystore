@@ -1,11 +1,10 @@
+import LoggedInNavBar from "./LoggedInNavBar";
 
-import NavBar from "./NavBar";
-
-export default function Users() {
-   return (
+export default function LoggedIn () {
+  return (
     <>
       <header className="header">
-        <NavBar />
+        <LoggedInNavBar />
       </header>
       <div>
         <main>
@@ -18,5 +17,5 @@ export default function Users() {
         </footer>
       </div>
     </>
-  ); 
+  );  
 }
