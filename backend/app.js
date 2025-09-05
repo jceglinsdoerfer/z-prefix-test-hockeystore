@@ -219,7 +219,7 @@ app.get('/hockeystore/auth/check', (req, res) => {
     const decoded = jwt.verify(token, JWT_SECRET);
     res.status(200).json({
       authenticated: true,
-      users: {
+      user: {
         user_id: decoded.user_id,
         user_name: decoded.user_name,
         first_name: decoded.first_name,
