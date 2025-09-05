@@ -31,9 +31,8 @@ export default function UserItems () {
            <h2>User Items</h2> 
             <div className="items-list">
                 {userItems.map((item) => (
-                    <div key={item.items_id} className="item-card">
-                        <h3>{item.item_name}</h3>
-                        <p>{item.description}</p>
+                    <div >
+                        {item}
                     </div>
                 ))}
             </div>
