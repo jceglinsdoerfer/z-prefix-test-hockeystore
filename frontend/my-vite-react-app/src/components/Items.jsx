@@ -1,11 +1,14 @@
 //this will be a normal list of all items that everyone can access but not manipulate(users can manipulate);
 import { useState, useEffect } from 'react';
 import NavBar from "./NavBar";
-
+import LoggedInNavBar from './LoggedInNavBar';
+import useAuth from '../hooks/useAuth';
 
 export default function Items() {
     const [items, setItems] = useState([]);
-
+    const { isAuthenticated, user } = useAuth();
+    const [addingItem, setAddingItem] = useState(null);
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         fetchItems();
@@ -45,6 +48,39 @@ export default function Items() {
         }
     };
 
+    const handleAddItem = async (itemId) => {
+        if (!isAuthenticated) {
+            alert('Please log in to add items to. your list');
+            return;
+        }
+        try {
+            const response = await fetch('http://localhost:8000/hockeystore/useritems', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    user_id: user.user_id,
+                    item_id: itemId,
+                    quantity: quantity
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add item');
+            }
+
+            const result = await response.json();
+            alert(`Item added to your list! ${result.message}`);
+            setAddingItem(null);
+            setQuantity(1);
+        } catch (err) {
+            console.error('Error adding item:', err.message);
+            alert('Failed to add the item to your list');
+        }
+    }
+
     const handleDetails = async (itemId) => {
         try {
             const response = await fetch(`http://localhost:8000/hockeystore/items/${itemId}`, {
@@ -73,7 +109,7 @@ export default function Items() {
     return (
         <div className="items-container">
             <header className="header">
-                <NavBar />
+                { isAuthenticated ? <LoggedInNavBar/> : <NavBar/> }
             </header>
             <h2>All Items</h2>
             <div className="items-list">
@@ -81,10 +117,10 @@ export default function Items() {
                     <div key={item.items_id} className="item-card">
                         <h3>{item.item_name}</h3>
                         {/* <p>{item.description}</p> */}
-                        <button 
+                        <button
                             className="nav-btn"
-                            onClick={() => handleAddItem(item.items.id)}
-                            >Add to Your list</button>
+                            onClick={() => handleAddItem(item.items_id)}
+                        >Add to Your list</button>
                         <button
                             className="nav-btn"
                             onClick={() => handleDelete(item.items_id)}

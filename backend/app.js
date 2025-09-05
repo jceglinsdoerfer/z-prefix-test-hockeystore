@@ -238,32 +238,42 @@ app.get('/hockeystore/auth/check', (req, res) => {
   }
 });
 
-// app.deleteUserItem(`/hockeystore/items/UserItems/${item_id}`, async (req, res) => {
-//   //console.log('Received item data:', req.body);
+app.post('/hockeystore/useritems', async (req, res) => {
+  const { user_id, item_id, quantity } = req.body;
 
-//   const { item_name, description } = req.body;
+  try {
+    const existingItem = await knex('user_items')
+      .where({ user_id, item_id })
+      .first();
 
-//   try {
-//     console.log('Attempting to delete item from DB');
+    if (existingItem) {
+      await knex('user_items')
+        .where({ user_id, item_id })
+        .update({ quantity: existingItem.quantity + quantity });
 
-//     const [newItem] = await knex('items')
-//       .delete({
-//         item_name,
-//         description
+      res.status(200).json({
+        message: 'Item quantity updated',
+        user_id,
+        item_id,
+        new_quantity: existingItem.quantity + quantity
+      });
+    } else {
+      await knex('user_items')
+        .insert({ user_id, item_id, quantity });
 
-//       })
-//       .returning(['items_id', 'item_name', 'description']);
+      res.status(201).json({
+        message: 'Item added to user inventory',
+        user_id,
+        item_id,
+        quantity
+      })
+    }
 
-//     console.log('Deletion successful:', newItem)
-
-//     res.status(201).json({
-//       message: 'Item Deleted',      
-//     });
-//   } catch (err) {
-//     console.error('Error inserting item:', err);
-//     res.status(500).json({ error: 'Failed to add item' });
-//   }
-// });
+  } catch (err) {
+    console.error('Error adding/updating user item:', err);
+    res.status(500).json({ error: 'Failed to add/update item' });
+  }
+});
 
 
 app.listen(PORT, () => {
