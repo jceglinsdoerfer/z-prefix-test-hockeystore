@@ -220,7 +220,7 @@ app.get('/hockeystore/auth/check', (req, res) => {
     res.status(200).json({
       authenticated: true,
       users: {
-        user_id: decoded.user.id,
+        user_id: decoded.user_id,
         user_name: decoded.user_name,
         first_name: decoded.first_name,
         last_name: decoded.last_name

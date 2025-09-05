@@ -7,7 +7,7 @@ export default function LoggedIn () {
   return (
     <>
       <header className="header">
-        {isAuthenticated ? <LogggedInNavbar /> : <NavBar />}
+        {isAuthenticated ? <LoggedInNavBar /> : <NavBar />}
       </header>
       <div>
         <main>

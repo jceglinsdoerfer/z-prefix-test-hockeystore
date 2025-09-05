@@ -14,7 +14,7 @@ function LoggedInNavBar() {
 
             if (response.ok) {
                 alert("Logged out successfully!");
-                navigate('/Home');
+                setTimeout(() =>navigate('/Home'), 100);
             }
         } catch (err) {
             console.error("Logout error:", err);
