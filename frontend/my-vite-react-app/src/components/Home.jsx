@@ -1,17 +1,16 @@
 import { useState } from "react";
 import NavBar from "./NavBar";
 import Items from "./Items"
-// import Sidebar from "./SideBar";
-// import PlaylistCard from "./PlaylistCard";
-// import ArtistCard from "./ArtistCard";
-// import "../CSS/Home.css";
+import LoggedInNavBar from "./LoggedInNavBar";
+import useAuth from "../hooks/useAuth";
 
 function Home() {
+  const { isAuthenticated, user } = useAuth();
   return (
     <>
       <header className="header">
         <h1>Hockeystore</h1>
-        <NavBar />
+        {isAuthenticated ? <LoggedInNavBar /> : <NavBar />}
       </header>
       <div>
         <main>

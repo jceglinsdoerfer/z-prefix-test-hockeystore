@@ -36,7 +36,7 @@ function Login() {
         setMessage(`Welcome ${data.user.first_name}! You are now logged in.`);
         setFormData({ user_name: "", password: "" });
         console.log("checking if it got here.");
-        navigate('/LoggedIn')
+        setTimeout(() => navigate('/LoggedIn'), 100)
       } else {
         setMessage(data.error || "Login Failed");
       }

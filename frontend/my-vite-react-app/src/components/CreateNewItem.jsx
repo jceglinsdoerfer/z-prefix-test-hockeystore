@@ -1,9 +1,12 @@
 import { useState } from "react";
 import NavBar from "./NavBar";
+import LoggedInNavBar from "./LoggedInNavBar";
+import useAuth from "../hooks/useAuth";
 
 
 
 function CreateNewItem() {
+  const { isAuthenticated } = useAuth();
   const [formItem, setFormItem] = useState({
     item_name: "",
     description: ""    
@@ -49,7 +52,7 @@ function CreateNewItem() {
 return (
   <>
     <header className="header">
-      <NavBar />
+      {isAuthenticated ? <LoggedInNavBar /> : <NavBar />}
     </header>
     <div>
       <h3>Please enter new item information</h3>

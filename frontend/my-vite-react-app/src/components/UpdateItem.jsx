@@ -1,9 +1,11 @@
 import { useState } from "react";
 import NavBar from "./NavBar";
-
+import LoggedInNavBar from "./LoggedInNavBar";
+import useAuth from "../hooks/useAuth";
 
 
 function UpdateItem() {
+    const { isAuthenticated } = useAuth();
     const [formItem, setFormItem] = useState({
         item_id: "",
         item_name: "",
@@ -50,7 +52,7 @@ function UpdateItem() {
     return (
         <>
             <header className="header">
-                <NavBar />
+               {isAuthenticated ? <LoggedInNavBar /> : <NavBar />}
             </header>
             <div>
                 <h3>Please enter information you want to update</h3>

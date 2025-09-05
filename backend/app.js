@@ -46,7 +46,8 @@ app.post('/hockeystore/login', async (req, res) => {
       message: 'Login successful',
       user: {
         user_id: user.user_id,
-        user_name: user.first_name,
+        user_name: user.user_name,
+        first_name: user.first_name,
         last_name: user.last_name
       }
     });
@@ -208,6 +209,27 @@ app.delete(`/hockeystore/items/:id`, async (req, res) => {
 }
 });
 
+app.get('/hockeystore/auth/check', (req, res) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.status(401).json({ error: 'Not authenticated' });
+  }
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    res.status(200).json({
+      authenticated: true,
+      users: {
+        user_id: decoded.user.id,
+        user_name: decoded.user_name,
+        first_name: decoded.first_name,
+        last_name: decoded.last_name
+      }
+    });
+  } catch (err) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+});
 
 // app.deleteUserItem(`/hockeystore/items/UserItems/${item_id}`, async (req, res) => {
 //   //console.log('Received item data:', req.body);

@@ -1,11 +1,12 @@
-//THis is going to be a list of a specific users items list
 import { useState, useEffect } from 'react';
 import LoggedInNavBar from "./LoggedInNavBar";
-//need to import the user_id to filter items they have....
+import NavBar from './NavBar';
+import useAuth from '../hooks/useAuth';
 
 export default function UserItems () {
     const [userItems, setUserItems] = useState([]);
-    
+    const [ isAuthenticated ] = useAuth();
+
     useEffect(() => {
         fetchItems();
     }, []);
@@ -26,7 +27,7 @@ export default function UserItems () {
     return (
         <div className="items-container">
             <header className="header">
-                <LoggedInNavBar />
+                {isAuthenticated? <LoggedInNavBar /> : <NavBar/>}
             </header>
            <h2>User Items</h2> 
             <div className="items-list">

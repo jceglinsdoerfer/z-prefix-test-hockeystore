@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 function NavBar() {
     const handleLogout = async () => {
         try {
-            const response = await fetch("http://localhose:8000/hockeystore/logout", {
+            const response = await fetch("http://localhost:8000/hockeystore/logout", {
                 method: "POST",
                 credentials: "include"
             });
