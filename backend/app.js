@@ -87,16 +87,23 @@ app.get('/hockeystore/items', async function (req, res) {
 });
 
 app.get('/hockeystore/useritems/:userId', async function (req, res) {
-  await knex('user_items')
-    .select('*')
-    .where('user_id', req.params.userId)
-    .then(data => res.status(200).json(data))
-    .catch(err =>
-      res.status(404).json({
-        message:
-          'The data you are looking for could not be found. Please try again'
-      })
-    );
+  try {
+    const data = await knex('user_items')
+      .join('items', 'user_items.item_id', '=', 'items.items_id')
+      .where('user_items.user_id', req.params.userId)
+      .select(
+        'user_items.item_id',
+        'user_items.quantity',
+        'items.item_name',
+        'items.description'
+      );
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('Error fetching user items:', err);
+    res.status(404).json({
+      message: 'The data you are looking for could not be found. Please try again'
+    });
+  }
 });
 
 app.post('/hockeystore/users', async (req, res) => {
@@ -191,22 +198,22 @@ app.delete(`/hockeystore/items/:id`, async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deleteItem = await knex('items').where('items_id' , id).first();
-    
+    const deleteItem = await knex('items').where('items_id', id).first();
+
     if (!deleteItem) {
       return res.status(404).json({ message: 'Item not found' });
     }
-    
+
     await knex('items').where('items_id', id).del();
 
     res.status(200).json({
       message: 'Item Deleted',
       deletedItem: deleteItem
-});
+    });
   } catch (err) {
-  console.error('Error deleting item:', err);
-  res.status(500).json({ error: 'Failed to delete item' });
-}
+    console.error('Error deleting item:', err);
+    res.status(500).json({ error: 'Failed to delete item' });
+  }
 });
 
 app.get('/hockeystore/auth/check', (req, res) => {
